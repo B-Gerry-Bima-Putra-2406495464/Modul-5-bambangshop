@@ -77,6 +77,11 @@ This is the place for you to write reflections:
 ### Mandatory (Publisher) Reflections
 
 #### Reflection Publisher-1
+1. Pada kasus BambangShop ini, penggunaan interface/trait tidak terlalu diwajibkan dan single Model struct Subscriber sudah cukup. Hal ini karena sifat subscriber di sini sangat seragam, yaitu hanya menerima data via HTTP POST request ke URL masing-masing. Kita tidak memiliki berbagai tipe subscriber dengan implementasi internal logic yang berbeda-beda di dalam aplikasi Publisher.
+
+2. Menggunakan DashMap sangat disarankan dan diperlukan karena kita butuh keunikan berdasarkan URL. Jika menggunakan Vec (list), kita harus melakukan iterasi dengan kompleksitas waktu O(n) untuk mencari subscriber yang ingin dihapus atau dicek. Dengan DashMap, pencarian, penambahan, dan penghapusan berdasarkan key (URL) bisa dilakukan jauh lebih cepat dengan kompleksitas O(1).
+
+3. Ya, kita tetap membutuhkan DashMap. Singleton hanya menjamin bahwa database in-memory tersebut diciptakan tepat satu kali (single instance) secara global. Namun, Singleton tidak otomatis menangani isu thread-safety. DashMap lah yang bekerja menangani penguncian (locking) saat banyak thread di web server mencoba menambah atau menghapus subscriber secara bersamaan agar tidak terjadi data race.
 
 #### Reflection Publisher-2
 
