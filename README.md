@@ -84,5 +84,10 @@ This is the place for you to write reflections:
 3. Ya, kita tetap membutuhkan DashMap. Singleton hanya menjamin bahwa database in-memory tersebut diciptakan tepat satu kali (single instance) secara global. Namun, Singleton tidak otomatis menangani isu thread-safety. DashMap lah yang bekerja menangani penguncian (locking) saat banyak thread di web server mencoba menambah atau menghapus subscriber secara bersamaan agar tidak terjadi data race.
 
 #### Reflection Publisher-2
+1. Memisahkan Service dan Repository menerapkan prinsip Single Responsibility Principle (SRP) dan Separation of Concerns. Model murni untuk mendefinisikan struktur data, Repository khusus menangani logika akses/penyimpanan data (seperti ke database atau memori), dan Service khusus menangani business logic atau aturan bisnis. Pemisahan ini membuat kode lebih rapi, modular, dan lebih mudah di-test (unit testing) secara independen.
+
+2. Jika semuanya ditaruh di Model, file Model akan memiliki terlalu banyak fungsi di satu tempat. Interaksi antar model (seperti Program, Subscriber, Notification) akan menciptakan ketergantungan yang kuat. Akibatnya, mengubah satu logika kecil pada notifikasi bisa berdampak langsung atau merusak kode yang mengurus subscriber atau product.
+
+3. Postman sangat membantu karena kita bisa langsung melakukan HTTP Request (POST, GET) ke API endpoint tanpa harus membuat aplikasi frontend terlebih dahulu. Fitur yang menarik adalah "Collections" yang bisa menyimpan skenario tes berulang kali dan pengiriman JSON body raw yang sangat praktis.
 
 #### Reflection Publisher-3
