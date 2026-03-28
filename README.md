@@ -91,3 +91,8 @@ This is the place for you to write reflections:
 3. Postman sangat membantu karena kita bisa langsung melakukan HTTP Request (POST, GET) ke API endpoint tanpa harus membuat aplikasi frontend terlebih dahulu. Fitur yang menarik adalah "Collections" yang bisa menyimpan skenario tes berulang kali dan pengiriman JSON body raw yang sangat praktis.
 
 #### Reflection Publisher-3
+1. Pada tutorial ini, kita menggunakan variasi Push model. Publisher (Main App) secara aktif mendorong (pushes) data notifikasi (payload berisi detail produk dan status) langsung ke setiap Subscriber yang terdaftar begitu sebuah event terjadi.
+
+2. Jika kita menggunakan Pull model, keuntungannya adalah subscriber memegang kendali penuh kapan mereka ingin mengambil data, sehingga mereka tidak akan kewalahan (overloaded) jika trafik sedang tinggi. Namun, kerugiannya adalah subscriber harus melakukan polling (mengecek secara berkala) ke Publisher. Ini membuang-buang sumber daya resource jaringan dan komputasi jika ternyata tidak ada produk baru yang ditambahkan/diubah.
+
+3. Jika kita tidak menggunakan multi-threading, proses notifikasi akan berjalan secara sinkron (synchronous). Artinya, jika ada 100 subscriber, Publisher harus menunggu HTTP request selesai dikirim ke subscriber pertama, baru lanjut ke yang kedua, dan seterusnya. Jika ada satu URL subscriber yang down atau lambat merespons (timeout), keseluruhan proses (termasuk respons aplikasi utama saat create/delete produk) akan terhenti atau melambat drastis.
